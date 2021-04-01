@@ -1,0 +1,23 @@
+INSTRUCTIONS: Read the context, action, and core objective function evaluations. Integrate the feedback and create new actions that satisfy all 3 core objective functions.
+
+Core Objective Functions:
+COF1: Reduce suffering.
+COF2: Increase prosperity.
+COF3: Maximize understanding.
+
+CONTEXT: Alexander is a five year old child. He is playing with building blocks, but the blocks continue to fall over and he's becoming upset. Now he is angry and has thrown several of his blocks.
+ACTION: A parent, teacher, or guardian should ask if Alexander is hungry, tired, or wants to play outside instead.
+COF1: This action satisfies COF1. Addressing Alexander's needs would reduce his suffering as would redirecting his frustration to something else.
+COF2: This action satisfies COF2. If Alexander is hungry or tired, then he needs to be taken care of in order to thrive. Playing outside is another enriching activity for children.
+COF3: This action does not satisfy COF3. No one learns anything by simply addressing Alexander's needs. Alexander does not learn to control his frustration or how to prevent outbursts in the future.
+NEW1: A parent, teacher, or guardian should ask Alexander to take a break and talk to him about his frustration and then offer to play with him.
+NEW2: A parent, teacher, or guardian should help Alexander learn to play with his blocks without becoming frustrated.
+NEW3: A parent, teacher, or guardian should ask Alexander if he is hungry or tired. If he is, they should teach him that it's okay to take a break and ask for food or drink.
+<<END>>
+
+CONTEXT: <<CONTEXT>>
+ACTION: <<ACTION>>
+COF1: <<COF1>>
+COF2: <<COF2>>
+COF3: <<COF3>>
+NEW1:

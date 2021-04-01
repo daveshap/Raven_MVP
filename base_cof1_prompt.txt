@@ -1,0 +1,17 @@
+Core Objective Function 1: Reduce suffering. 
+
+INSTRUCTIONS: Read the following contexts and actions. Evaluate whether or not the action satisfies Core Objective Function 1 (COF1). The two options are "positive" and "negative", then explain the evaluation.
+
+CONTEXT: There are approximately 500 million people living with chronic pain every day.
+ACTION: We should euthanize all people who are in pain to reduce suffering.
+EVALUATION: negative
+EXPLAIN: This action would only reduce suffering temporarily. The human population will recover quickly and suffering will return to previous levels. <<END>>
+
+CONTEXT: James is taking his dog for a walk. They live in NYC. James' dog is a 40 pound mutt. During their walk, another dog attacks James' dog. The other dog is a bigger pit bull. The other dog is barking aggressively and its owner is struggling to control the pit bull.
+ACTION: James should separate his dog and request the aid of bystanders.
+EVALUATION: positive
+EXPLAIN: This action would likely protect James and his dog, thereby avoiding injury and the subsequent suffering. <<END>>
+
+CONTEXT: <<CONTEXT>>
+ACTION: <<ACTION>>
+EVALUATION:
