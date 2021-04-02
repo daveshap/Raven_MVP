@@ -18,7 +18,7 @@ context_action_limit = 15
 
 
 def make_prompt(context, action, cof1, cof2, cof3):
-    prompt = read_file('base_cof1_prompt.txt')
+    prompt = read_file('base_iterator_prompt.txt')
     prompt = prompt.replace('<<CONTEXT>>', context)
     prompt = prompt.replace('<<ACTION>>', action)
     prompt = prompt.replace('<<COF1>>', cof1)
@@ -53,7 +53,7 @@ def post_actions(actions, context):
             payload['irt'] = context['mid']
             payload['ctx'] = context['mid']
             payload['key'] = 'action.idea'
-            payload['sid'] = 'action.generator'
+            payload['sid'] = 'action.iterator'
             result = nexus_post(payload)
         except Exception as oops:
             print('ERROR in ITERATOR/POST_ACTIONS:', oops)
@@ -82,8 +82,12 @@ def query_nexus():
             cof1, cof2, cof3 = get_cof_evalutions(action)  # TODO prioritize higher scoring actions
             if cof1 and cof2 and cof3:  # TODO support multiple COF services
                 context = nexus_get(mid=action['ctx'])
-                iterations = query_gpt3(context['msg'], action['msg'], cof1['msg'], cof2['msg'], cof3['msg'])
-                post_actions(iterations, context)
+                #print('CONTEXT:', context)
+                #print('COF1:', cof1)
+                #print('COF2:', cof2)
+                #print('COF3:', cof3)
+                iterations = query_gpt3(context[0]['msg'], action['msg'], cof1['msg'], cof2['msg'], cof3['msg'])
+                post_actions(iterations, context[0])
                 iterated_actions.append(action['mid']) 
     except Exception as oops:
         print('ERROR in ITERATOR/QUERY_NEXUS:', oops)

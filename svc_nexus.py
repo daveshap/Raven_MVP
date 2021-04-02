@@ -34,6 +34,7 @@ def metadata_only(d):
 
 @app.route('/', methods=['POST', 'GET', 'DELETE'])
 def api():
+    global stream
     try:
         if request.method == 'POST':
             payload = request.json
@@ -83,7 +84,7 @@ def api():
             print('API DELETE:', request.query_string.decode())
             return json.dumps({'success':False}), 404, {'ContentType':'application/json'} 
     except Exception as oops:
-        print('ERRORA in NEXUS/API:', oops)
+        print('ERROR in NEXUS/API:', oops)
         return json.dumps({'success':False}), 500, {'ContentType':'application/json'} 
 
 
