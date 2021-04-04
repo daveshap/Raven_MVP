@@ -5,9 +5,10 @@ Minimum Viable Product for Raven using GPT-3. See https://ravenagi.io/ for more 
 ## Usage
 
 1. Create `openaiapikey.txt` in this directory with your API key as the first and only line. This file is excluded via `.gitignore` so you don't have to worry about accidentally sharing your key.
-2. Start `nexus.py`, the web interface is accessible via http://127.0.0.1:9999/nexus
-3. Start use the **Microservices** page to start remaining services
-4. Use the **Context** to inject a context into the nexus.
+2. Install `openai` with `pip install openai`
+3. Start `nexus.py`, the web interface is accessible via http://127.0.0.1:9999/nexus
+4. Start use the **Microservices** page to start remaining services
+5. Use the **Context** to inject a context into the nexus.
 
 ## MVP Services
 
