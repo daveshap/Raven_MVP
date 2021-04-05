@@ -70,6 +70,7 @@ def query_nexus():
     except Exception as oops:
         print('ERROR in ACTIONS/QUERY_NEXUS:', oops)
 
+
 if __name__ == '__main__':
     print('Starting Action Generator')
     while True:
