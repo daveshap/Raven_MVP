@@ -8,14 +8,15 @@ from functions import *
 from rake_nltk import Rake
 
 
-
 default_sleep = 1
 last_msg = {'time':0.0}
 
 
 def start_db(connection, cursor):
-    cursor.execute('CREATE TABLE recall (msg text, key text, sid text, irt text, ctx text, mid text UNIQUE, time real)')
-    cursor.execute('CREATE INDEX msg_idx ON recall(msg)')
+    # create table if it doesn't exist
+    cursor.execute('CREATE TABLE IF NOT EXISTS recall (msg text, key text, sid text, irt text, ctx text, mid text UNIQUE, time real)')
+    # create index if it doesn't exist
+    cursor.execute('CREATE INDEX IF NOT EXISTS msg_idx ON recall(msg)')
     connection.commit()
 
 
@@ -27,8 +28,9 @@ def query_nexus():
 
 def save_nexus(messages, connection, cursor):
     # order: msg, key, sid, irt, ctx, mid, time
-    values = [(i['msg'], i['key'], i['sid'], i['irt'], i['ctx'], i['mid'], i['time']) for i in messages]
-    cur.executemany('INSERT INTO recall VALUES (?,?,?,?,?,?,?)', values)
+    values = [(i['msg'], i['key'], i['sid'], i['irt'], i['ctx'], i['mid'], i['time']) for i in messages if 'recall' not in i['key']]  # exclude recalled messages
+    for value in values:
+        result = cursor.execute('INSERT OR IGNORE INTO recall VALUES (?,?,?,?,?,?,?)', value)  # skip over duplicate values
     connection.commit()
 
 
@@ -47,11 +49,12 @@ def fetch_recall(terms, cursor):
     results = list()
     for term in terms:
         # TODO split term up based on whitespace, remove punctuation, add multiple LIKE clauses to WHERE condition
-        query = "SELECT * FROM recall WHERE column LIKE '%%s%'" % term
+        query = """SELECT * FROM recall WHERE msg LIKE '%{0}%'""".format(term)
         cursor.execute(query)
-        fetch = cursor.fetchall()  # test this syntax
-        results += fetch  # make sure this looks like original messages (list of dicts)
-    return results
+        fetch = cursor.fetchall()
+        results += fetch
+    final = [{'msg': i[0], 'key': i[1], 'sid': i[2], 'irt': i[3], 'ctx': i[4], 'mid': i[5], 'time': i[6]} for i in results]
+    return final
 
 
 def post_messages(messages):
@@ -61,9 +64,10 @@ def post_messages(messages):
             payload['msg'] = message['msg']
             payload['irt'] = message['irt']
             payload['ctx'] = message['ctx']
+            payload['mid'] = message['mid']  # nexus can decide whether or not to keep
+            payload['time'] = message['time']  # nexus can decide whether or not to keep
             payload['key'] = 'recall.' + message['key']
-            payload['sid'] = 'recall'
-            # TODO retain original MID and TIME?? probably...
+            payload['sid'] = 'recall.' + message['sid']
             result = nexus_post(payload)
             #print(result)
         except Exception as oops:
