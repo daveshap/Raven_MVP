@@ -44,7 +44,7 @@ def fetch_encyclopedia(terms, cursor):
     results = list()
     for term in terms:
         # TODO split term up based on whitespace, remove punctuation, add multiple LIKE clauses to WHERE condition
-        query = """SELECT article FROM wiki WHERE article LIKE '%{0}%'""".format(term[0])
+        query = """SELECT article FROM wiki WHERE title LIKE '%{0}%'""".format(term[0])
         cursor.execute(query)
         fetch = cursor.fetchall()
         results += [(i, term[1]) for i in fetch]  # i is article, term[1] is CTX
