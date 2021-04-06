@@ -3,3 +3,5 @@ openaiapikey.txt
 __pycache__/
 logs/
 raven_recall.sqlite
+simple_wiki.sqlite
+*.sqlite
