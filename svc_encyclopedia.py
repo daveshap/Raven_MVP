@@ -22,6 +22,7 @@ def start_db(connection, cursor):
 
 def query_nexus():
     global last_msg
+    print(last_msg)
     stream = nexus_get(start=last_msg['time'], key='context.new')
     for i in stream:
         if i['time'] > last_msg['time']:
@@ -35,7 +36,7 @@ def find_keywords(messages):
     for message in messages:
         r.extract_keywords_from_text(message['msg'])
         scores = r.get_ranked_phrases_with_scores()
-        terms = [(i[1], message['ctx']) for i in scores if i[0] > 2.0]  # generally seems like nothing below 2.0 is interesting
+        terms = [(i[1], message['mid']) for i in scores if i[0] > 2.0]  # generally seems like nothing below 2.0 is interesting
         results += terms
     return results
 
@@ -67,12 +68,16 @@ def post_messages(articles):
 
 
 if __name__ == '__main__':
-    print('Starting Recall Service')
+    print('Starting Encyclopedia Service')
     dbcon = sqlite3.connect('simple_wiki.sqlite')
     dbcur = dbcon.cursor()
     while True:
+        print('ENC loop')
         latest = query_nexus()
+        print('LATEST:', latest)
         keywords = find_keywords(latest)
+        print('KEYWORDS:', keywords)
         encyclopedia_articles = fetch_encyclopedia(keywords, dbcur)
+        print('ARTICLES:', len(encyclopedia_articles))
         post_messages(encyclopedia_articles)
         sleep(default_sleep)

@@ -68,9 +68,9 @@ def api():
             if 'keyword' in request.args:
                 result = [i for i in result if request.args['keyword'] in i['msg']]
             if 'start' in request.args:
-                result = [i for i in result if i['time'] >= float(request.args['start'])]
+                result = [i for i in result if i['time'] > float(request.args['start'])]
             if 'end' in request.args:
-                result = [i for i in result if i['time'] <= float(request.args['end'])]
+                result = [i for i in result if i['time'] < float(request.args['end'])]
             if 'metadata' in request.args:
                 result = [metadata_only(i) for i in result]
             #print('API GET:', request.query_string.decode(), '\tCOUNT:', len(result))
