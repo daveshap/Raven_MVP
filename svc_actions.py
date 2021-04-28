@@ -23,7 +23,8 @@ def make_prompt(context):
 def query_gpt3(context):
     prompt = make_prompt(context)
     response = openai.Completion.create(
-        engine='davinci',
+        #engine='davinci',
+        engine='curie',
         prompt=prompt,
         temperature=0.5,
         max_tokens=1000,

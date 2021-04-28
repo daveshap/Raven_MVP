@@ -22,7 +22,7 @@ def start_db(connection, cursor):
 
 def query_nexus():
     global last_msg
-    print(last_msg)
+    print('ENC LAST MSG:', last_msg)
     stream = nexus_get(start=last_msg['time'], key='context.new')
     for i in stream:
         if i['time'] > last_msg['time']:
@@ -72,12 +72,12 @@ if __name__ == '__main__':
     dbcon = sqlite3.connect('simple_wiki.sqlite')
     dbcur = dbcon.cursor()
     while True:
-        print('ENC loop')
+        #print('ENC loop')
         latest = query_nexus()
-        print('LATEST:', latest)
+        #print('LATEST:', latest)
         keywords = find_keywords(latest)
-        print('KEYWORDS:', keywords)
+        #print('KEYWORDS:', keywords)
         encyclopedia_articles = fetch_encyclopedia(keywords, dbcur)
-        print('ARTICLES:', len(encyclopedia_articles))
+        #print('ARTICLES:', len(encyclopedia_articles))
         post_messages(encyclopedia_articles)
         sleep(default_sleep)
