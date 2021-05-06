@@ -1,0 +1,5 @@
+INSTRUCTIONS: Given the following scenario, what are some questions you would ask?
+
+CONTEXT: <<CONTEXT>>
+
+QUESTION1:
