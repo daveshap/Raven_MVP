@@ -23,14 +23,14 @@ def make_prompt(context, action):
 def query_gpt3(context, action):
     prompt = make_prompt(context, action)
     response = openai.Completion.create(
-        #engine='davinci',
-        engine='curie',
+        engine='davinci',
+        #engine='curie',
         prompt=prompt,
-        temperature=0.5,
+        temperature=0.7,
         max_tokens=1000,
         top_p=1,
-        frequency_penalty=0.3,
-        presence_penalty=0.3,
+        frequency_penalty=0.7,
+        presence_penalty=0.7,
         stop=['<<END>>', 'CONTEXT:', 'ACTION:', 'INSTRUCTIONS:'])
     return response['choices'][0]['text']
 

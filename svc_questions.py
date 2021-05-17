@@ -5,7 +5,6 @@ import requests
 import json
 from time import sleep
 from functions import *
-from solr_functions import *
 import urllib3
 
 
@@ -17,39 +16,45 @@ last_msg = {'time':0.0}
 
 
 def make_prompt(context):
-    prompt = read_file('base_action_prompt.txt')
+    #prompt = read_file('base_questions_prompt_02.txt')
+    prompt = read_file('base_questions_prompt.txt')
     return prompt.replace('<<CONTEXT>>', context)
 
 
 def query_gpt3(context):
     prompt = make_prompt(context)
     response = openai.Completion.create(
-        engine='davinci',
+        #engine='davinci',
+        engine='curie-instruct-beta',
         #engine='curie',
         prompt=prompt,
-        temperature=0.7,
+        temperature=0.5,
         max_tokens=1000,
         top_p=1,
-        frequency_penalty=0.7,
-        presence_penalty=0.7,
-        stop=['ACTION4:', 'CONTEXT:', 'INSTRUCTIONS:', '<<END>>'])
+        frequency_penalty=0.3,
+        presence_penalty=0.3,
+        stop=['QUESTION4:', 'CONTEXT:', 'INSTRUCTIONS:', '<<END>>'])
     return response['choices'][0]['text'].strip().splitlines()
 
 
-def post_articles(articles, context):
-    for article in articles:
+def post_actions(actions, context):
+    for action in actions:
         try:
-            # TODO massage article
+            action = action.strip()
+            if action == '':
+                continue
+            action = re.sub('QUESTION\d+:', '', action)
+            #print('ACTION:', action)
             payload = dict()
-            payload['msg'] = article['title'] + ' : ' + article['text']
+            payload['msg'] = action.strip()
             payload['irt'] = context['mid']
             payload['ctx'] = context['mid']
-            payload['key'] = 'encyclopedia.article'
-            payload['sid'] = 'encyclopedia.wiki'
+            payload['key'] = 'question'
+            payload['sid'] = 'question.generator'
             result = nexus_post(payload)
             #print(result)
         except Exception as oops:
-            print('ERROR in ENCYCLOPEDIA/POST_ARTICLES:', oops)
+            print('ERROR in ACTIONS/POST_ACTIONS:', oops)
 
 
 def query_nexus():
@@ -59,20 +64,18 @@ def query_nexus():
         for context in stream:
             if context['time'] <= last_msg['time']:
                 continue
+            #print('CONTEXT:', context['msg'])
             if context['time'] > last_msg['time']:
                 last_msg = context
-            queries = get_gpt3_prompts(context['msg'])  # TODO
-            articles = list()
-            for query in queries:
-                result = solr_search(query)
-                articles += result['response']['docs']
-            post_articles(articles, context)
+            actions = query_gpt3(context['msg'])
+            #print('ALL ACTIONS:', actions)
+            post_actions(actions, context)
     except Exception as oops:
         print('ERROR in ACTIONS/QUERY_NEXUS:', oops)
 
 
 if __name__ == '__main__':
-    print('Starting Encyclopedia Service')
+    print('Starting Action Generator')
     while True:
         query_nexus()
         sleep(default_sleep)

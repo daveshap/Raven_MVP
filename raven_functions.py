@@ -79,8 +79,9 @@ def stream_table(stream):
 <th>CTX</th></tr>
 '''
     for message in stream:
-        html += '''<tr><td nowrap>%s</td><td>%s</td><td nowrap>%s</td><td nowrap>%s</td><td nowrap>%s</td><td nowrap>%s</td><td nowrap>%s</td>
-</tr>''' % (message['key'], message['msg'], message['sid'], message['time'], message['mid'], message['irt'], message['ctx'])
+        #html += '''<tr><td nowrap>%s</td><td>%s</td><td nowrap>%s</td><td nowrap>%s</td><td nowrap>%s</td><td nowrap>%s</td><td nowrap>%s</td>
+        html += '''<tr><td >%s</td><td>%s</td><td >%s</td><td >%s</td><td >%s</td><td >%s</td><td >%s</td>
+        </tr>''' % (message['key'], message['msg'], message['sid'], message['time'], message['mid'], message['irt'], message['ctx'])
     html += '</table>'
     return html
 

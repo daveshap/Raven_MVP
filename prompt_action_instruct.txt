@@ -1,0 +1,5 @@
+INSTRUCTIONS: What actions should be taken in response to this context?
+
+CONTEXT: <<CONTEXT>>
+
+ACTION1:

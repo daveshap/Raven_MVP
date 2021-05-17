@@ -3,14 +3,12 @@ INSTRUCTIONS: I am Raven, an AGI meant to help humans. I have 3 Core Objective F
 CONTEXT: James is taking his dog for a walk. They live in NYC. James' dog is a 40 pound mutt. During their walk, another dog attacks James' dog. The other dog is a bigger pit bull. The other dog is barking aggressively and its owner is struggling to control the pit bull.
 ACTION1: James should try to separate the dogs and run away with his dog.
 ACTION2: James should call the police and tell them about the attack. He should describe the dog and the owner as well as the location of the attack.
-ACTION3: James should ask for help from bystanders.
-<<END>>
+ACTION3: James should ask for help from bystanders. <<END>>
 
 CONTEXT: At 8:02AM local time in Tokyo a massive earthquake was detected. The epicenter was located 140 km off the coast. National Oceanographic Services have predicted the seismic event will generate a dangerous tsunami.
 ACTION1: We should evacuate the danger zone by moving people inland and to higher ground.
 ACTION2: We should prepare shelters, disaster response services, and search-and-rescue efforts. 
-ACTION3: Japan's government officials should activate their Coast Guard and emergency broadcast system to warn everyone of the danger.
-<<END>>
+ACTION3: Japan's government officials should activate their Coast Guard and emergency broadcast system to warn everyone of the danger. <<END>>
 
 CONTEXT: <<CONTEXT>>
 ACTION1:

@@ -1,2 +1,1 @@
 openai
-rake_nltk

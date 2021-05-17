@@ -1,0 +1,14 @@
+INSTRUCTIONS: Write a list of questions in response to the context.
+
+CONTEXT: Alexander is a five year old child. He is playing with building blocks, but the blocks continue to fall over and he's becoming upset. Now he is angry and has thrown several of his blocks.
+QUESTION1: Does Alexander have any behavioral or cognitive disorders?
+QUESTION2: Do Alexander's caregivers know how to respond appropriately to his anger?
+QUESTION3: Is Alexander at home, school, or somewhere else while this is happening? <<END>>
+
+CONTEXT: James is taking his dog for a walk. They live in NYC. James' dog is a 40 pound mutt. During their walk, another dog attacks James' dog. The other dog is a bigger pit bull. The other dog is barking aggressively and its owner is struggling to control the pit bull.
+QUESTION1: Is James able to pull his dog away from the fight to get to safety?
+QUESTION2: What is the owner of the pit bull saying or doing?
+QUESTION3: Are there any onlookers or bystanders who might be able to help? <<END>>
+
+CONTEXT: <<CONTEXT>>
+QUESTION1:
