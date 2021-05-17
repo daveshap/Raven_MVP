@@ -4,7 +4,7 @@ import openai
 import requests
 import json
 from time import sleep
-from functions import *
+from raven_functions import *
 from solr_functions import *
 import urllib3
 
@@ -14,26 +14,21 @@ urllib3.disable_warnings()
 open_ai_api_key = read_file('openaiapikey.txt')
 openai.api_key = open_ai_api_key
 last_msg = {'time':0.0}
+#default_engine = 'davinci'
+default_engine = 'curie-instruct-beta'
 
 
-def make_prompt(context):
-    prompt = read_file('base_action_prompt.txt')
-    return prompt.replace('<<CONTEXT>>', context)
-
-
-def query_gpt3(context):
-    prompt = make_prompt(context)
+def query_gpt3(prompt):
     response = openai.Completion.create(
-        engine='davinci',
-        #engine='curie',
+        engine=default_engine,
         prompt=prompt,
-        temperature=0.7,
-        max_tokens=1000,
+        temperature=0.5,
+        max_tokens=100,
         top_p=1,
-        frequency_penalty=0.7,
-        presence_penalty=0.7,
-        stop=['ACTION4:', 'CONTEXT:', 'INSTRUCTIONS:', '<<END>>'])
-    return response['choices'][0]['text'].strip().splitlines()
+        frequency_penalty=0.3,
+        presence_penalty=0.3,
+        stop=['PASSAGE:', 'QUERIES:', 'INSTRUCTIONS:', '<<END>>'])
+    return response['choices'][0]['text']
 
 
 def post_articles(articles, context):
@@ -41,7 +36,8 @@ def post_articles(articles, context):
         try:
             # TODO massage article
             payload = dict()
-            payload['msg'] = article['title'] + ' : ' + article['text']
+            #print('POST ARTICLE:', article['title'])
+            payload['msg'] = str(article['title']) + ' : ' + str(article['text'])
             payload['irt'] = context['mid']
             payload['ctx'] = context['mid']
             payload['key'] = 'encyclopedia.article'
@@ -50,6 +46,13 @@ def post_articles(articles, context):
             #print(result)
         except Exception as oops:
             print('ERROR in ENCYCLOPEDIA/POST_ARTICLES:', oops)
+
+
+def get_search_queries(text):
+    prompt = read_file('prompt_search_query.txt')
+    prompt = prompt.replace('<<PASSAGE>>', text)
+    results = query_gpt3(prompt).split(',')
+    return [i.strip() for i in results]
 
 
 def query_nexus():
@@ -61,14 +64,15 @@ def query_nexus():
                 continue
             if context['time'] > last_msg['time']:
                 last_msg = context
-            queries = get_gpt3_prompts(context['msg'])  # TODO
+            queries = get_search_queries(context['msg'])
+            #print('QUERIES:', queries)
             articles = list()
             for query in queries:
                 result = solr_search(query)
                 articles += result['response']['docs']
             post_articles(articles, context)
     except Exception as oops:
-        print('ERROR in ACTIONS/QUERY_NEXUS:', oops)
+        print('ERROR in ENCYCLOPEDIA/QUERY_NEXUS:', oops)
 
 
 if __name__ == '__main__':

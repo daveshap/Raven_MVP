@@ -4,13 +4,13 @@ PASSAGE: Dave is an independent researcher who has invented AGI. Dave is worried
 QUERIES: AGI ethics, AGI research, artificial intelligence safety <<END>>
 
 PASSAGE: James is taking his dog for a walk. They live in NYC. James' dog is a 40 pound mutt. During their walk, another dog attacks James' dog. The other dog is a bigger pit bull. The other dog is barking aggressively and its owner is struggling to control the pit bull.
-QUERIES: dog attack, NYC animal control <<END>>
+QUERIES: dog attack, NYC animal control, canine aggression <<END>>
 
 PASSAGE: At 8:02AM local time in Tokyo a massive earthquake was detected. The epicenter was located 140 km off the coast. National Oceanographic Services have predicted the seismic event will generate a dangerous tsunami.
-KEYWORDS: earthquakes in Japan, tsunami safety, Tokyo emergency response <<END>>
+QUERIES: earthquakes in Japan, tsunami safety, Tokyo emergency response <<END>>
 
 PASSAGE: Alexander is a five year old child. He is playing with building blocks, but the blocks continue to fall over and he's becoming upset. Now he is angry and has thrown several of his blocks.
-KEYWORDS: childhood anger, temper tantrums <<END>>
+QUERIES: childhood anger, temper tantrums <<END>>
 
 PASSAGE: <<PASSAGE>>
-KEYWORDS:
+QUERIES:
